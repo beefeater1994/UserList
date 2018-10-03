@@ -16,11 +16,11 @@ function requestFail(error) {
     error
   };
 }
-function getData() {
+export const getData = () => {
   return (dispatch, store) => {
     dispatch(requestStart());
     axios
-      .get('/api/users')
+      .get('/users')
       .then(response => {
         dispatch(requestSuccess(response));
       })
@@ -28,6 +28,6 @@ function getData() {
         dispatch(requestFail(err));
       });
   };
-}
+};
 
-export default getData;
+

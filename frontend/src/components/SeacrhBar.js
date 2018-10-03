@@ -8,6 +8,7 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import Button from "@material-ui/core/Button/Button";
+import RollingPage from "./RollingPage";
 
 const styles = theme => ({
     root: {
@@ -86,11 +87,21 @@ class SearchBar extends React.Component {
             inputValue: ""
         }
     }
+    handleLeftPage = () => {
+        if (!this.props.canbeLeft) return;
+        this.props.leftPage();
+    }
+    handleRightPage = () => {
+        if (!this.props.canbeRight) return;
+        this.props.rightPage();
+        console.log("ssss");
+    }
     handleChange = (event) => {
         this.setState({inputValue: event.target.value});
     };
     render() {
         const { classes } = this.props;
+        console.log(this.props);
         return (
             <div className={classes.root}>
                 <AppBar position="static">
@@ -116,10 +127,10 @@ class SearchBar extends React.Component {
                         <Button variant="contained" color="primary" className={classes.button}>
                             SORT
                         </Button>
-                        <Button variant="contained" color="primary" className={classes.button}>
+                        <Button variant="contained" color="primary" className={classes.button} onClick={this.handleLeftPage}>
                             PREV PAGE
                         </Button>
-                        <Button variant="contained" color="primary" className={classes.button}>
+                        <Button variant="contained" color="primary" className={classes.button} onClick={this.handleRightPage}>
                             NEXT PAGE
                         </Button>
                         <Button variant="contained" color="primary" className={classes.button}>

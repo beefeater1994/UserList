@@ -24,7 +24,6 @@ const styles = theme => ({
 
 const DisplayTable = (props) => {
     const { classes } = props;
-    console.log(props);
     return (
         <Paper className={classes.root}>
             <Table className={classes.table}>
@@ -41,7 +40,7 @@ const DisplayTable = (props) => {
                 <TableBody>
                     {props.users.map(row => {
                         return (
-                            <TableRow key={row.id}>
+                            <TableRow key={row._id}>
                                 <TableCell>
                                     <Button variant="contained" color="primary" className={classes.button}>
                                         <EditIcon />
