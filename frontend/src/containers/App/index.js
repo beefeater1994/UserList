@@ -5,6 +5,7 @@ import * as actions from '../../actions';
 import SearchBar from "../../components/SeacrhBar";
 import DisplayTable from "../../components/DispalyTable";
 import {BrowserRouter, Route} from 'react-router-dom';
+import Foot from "../../components/Foot";
 
 class App extends Component {
     constructor(props) {
@@ -12,6 +13,9 @@ class App extends Component {
     }
     componentDidMount() {
         this.props.getUser();
+    }
+    selectPage = (num) => {
+        this.props.selectPage(num);
     }
     render() {
         const { isFetching, data, err } = this.props.users;
@@ -29,20 +33,24 @@ class App extends Component {
         while (i < data.length) {
             counter++;
             pageArr.push(counter);
-            dataArr.push(data.slice(i, i + 20));
-            i += 20;
+            dataArr.push(data.slice(i, i + 10));
+            i += 10;
         }
         let canbeLeft = this.props.page.num === 1 ? false : true;
         let canbeRight = this.props.page.num === counter ? false : true;
         return (
             <div>
-                <SearchBar canbeLeft={canbeLeft} canbeRight={canbeRight}
-                           leftPage={this.props.leftPage}
-                           rightPage={this.props.rightPage}
-                />
+                <SearchBar/>
                 <BrowserRouter>
                     <Route exact={true} path='/' render={()=> <DisplayTable users={dataArr[this.props.page.num - 1]}/>}/>
                 </BrowserRouter>
+                <Foot canbeLeft={canbeLeft}
+                      canbeRight={canbeRight}
+                      leftPage={this.props.leftPage}
+                      rightPage={this.props.rightPage}
+                      pageArr={pageArr}
+                      selectPage={this.selectPage}
+                />
             </div>
         );
     }
@@ -65,6 +73,9 @@ const mapDispatchToProps = dispatch => {
       },
       rightPage: () => {
           dispatch({type: 'RightPage'});
+      },
+      selectPage: (num) => {
+          dispatch(actions.selectPage(num));
       }
   };
 };

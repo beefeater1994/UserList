@@ -30,4 +30,8 @@ export const getData = () => {
   };
 };
 
+export const selectPage = (num) => ({
+    type: "SELECT_PAGE",
+    num: num
+});
 

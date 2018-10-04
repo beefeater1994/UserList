@@ -8,7 +8,6 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import Button from "@material-ui/core/Button/Button";
-import RollingPage from "./RollingPage";
 
 const styles = theme => ({
     root: {
@@ -26,6 +25,7 @@ const styles = theme => ({
         [theme.breakpoints.up('sm')]: {
             display: 'block',
         },
+        marginLeft: 20
     },
     search: {
         position: 'relative',
@@ -101,14 +101,22 @@ class SearchBar extends React.Component {
     };
     render() {
         const { classes } = this.props;
-        console.log(this.props);
         return (
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
-                        <Typography className={classes.title} variant="title" color="inherit" noWrap>
-                            User List
-                        </Typography>
+                        <Button variant="contained" color="primary" className={classes.button} onClick={this.handleLeftPage}>
+                            PREV PAGE
+                        </Button>
+                        <Button variant="contained" color="primary" className={classes.button} onClick={this.handleRightPage}>
+                            NEXT PAGE
+                        </Button>
+                        <div>
+                            <Typography className={classes.title} variant="title" color="inherit" noWrap>
+                                User List
+                            </Typography>
+                        </div>
+
                         <div className={classes.search} onSubmit={this.handleSubmit}>
                             <div className={classes.searchIcon}>
                                 <SearchIcon />
@@ -126,12 +134,6 @@ class SearchBar extends React.Component {
                         </div>
                         <Button variant="contained" color="primary" className={classes.button}>
                             SORT
-                        </Button>
-                        <Button variant="contained" color="primary" className={classes.button} onClick={this.handleLeftPage}>
-                            PREV PAGE
-                        </Button>
-                        <Button variant="contained" color="primary" className={classes.button} onClick={this.handleRightPage}>
-                            NEXT PAGE
                         </Button>
                         <Button variant="contained" color="primary" className={classes.button}>
                             CREATE NEW USER

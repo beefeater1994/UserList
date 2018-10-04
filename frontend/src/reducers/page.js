@@ -9,6 +9,10 @@ const reducer = (state = initialState, action) => {
             return {
                 num: state.num + 1
             }
+        case 'SelectPage':
+            return {
+                num: action.num
+            }
         default:
             return state
     }
