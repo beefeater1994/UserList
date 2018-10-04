@@ -1,21 +1,31 @@
-const initialState = {num: 1};
-const reducer = (state = initialState, action) => {
+const initState = {
+    order: 'asc',
+    orderBy: 'firstName',
+    page: 0,
+    rowsPerPage: 10,
+};
+
+const reducer = (state=initState, action) => {
     switch (action.type) {
-        case 'LeftPage':
+        case 'CHANGE_SORT_RULE':
             return {
-                num: state.num - 1
+                ...state,
+                order: action.order,
+                orderBy: action.orderBy
             };
-        case 'RightPage':
+        case 'CHANGE_PAGE':
             return {
-                num: state.num + 1
+                ...state,
+                page: action.page
             }
-        case 'SelectPage':
+        case 'CHANGE_ROWS_PER_PAGE':
             return {
-                num: action.num
+                ...state,
+                rowsPerPage: action.rowsPerPage
             }
         default:
-            return state
+            return state;
     }
-}
+};
 
 export default reducer;

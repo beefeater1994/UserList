@@ -87,15 +87,6 @@ class SearchBar extends React.Component {
             inputValue: ""
         }
     }
-    handleLeftPage = () => {
-        if (!this.props.canbeLeft) return;
-        this.props.leftPage();
-    }
-    handleRightPage = () => {
-        if (!this.props.canbeRight) return;
-        this.props.rightPage();
-        console.log("ssss");
-    }
     handleChange = (event) => {
         this.setState({inputValue: event.target.value});
     };
@@ -105,12 +96,6 @@ class SearchBar extends React.Component {
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
-                        <Button variant="contained" color="primary" className={classes.button} onClick={this.handleLeftPage}>
-                            PREV PAGE
-                        </Button>
-                        <Button variant="contained" color="primary" className={classes.button} onClick={this.handleRightPage}>
-                            NEXT PAGE
-                        </Button>
                         <div>
                             <Typography className={classes.title} variant="title" color="inherit" noWrap>
                                 User List
@@ -132,9 +117,6 @@ class SearchBar extends React.Component {
                                 onChange={this.handleChange}
                             />
                         </div>
-                        <Button variant="contained" color="primary" className={classes.button}>
-                            SORT
-                        </Button>
                         <Button variant="contained" color="primary" className={classes.button}>
                             CREATE NEW USER
                         </Button>

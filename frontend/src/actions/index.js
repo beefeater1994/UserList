@@ -30,8 +30,25 @@ export const getData = () => {
   };
 };
 
-export const selectPage = (num) => ({
-    type: "SELECT_PAGE",
-    num: num
-});
+export const changeSortRule = (order, orderBy) => {
+    return {
+        type: 'CHANGE_SORT_RULE',
+        order,
+        orderBy
+    }
+};
+
+export const changePage = (page) => {
+    return {
+        type: 'CHANGE_PAGE',
+        page
+    }
+};
+
+export const changeRowsPerPage = (rowsPerPage) => {
+    return {
+        type: 'CHANGE_ROWS_PER_PAGE',
+        rowsPerPage
+    }
+};
 
