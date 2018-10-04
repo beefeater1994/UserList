@@ -16,8 +16,6 @@ db.once('open', function() {
 app.get('/users', (req, res) => {
     User.find({}, function(err, users) {
         if (err) throw err;
-        //res.send(users);
-        console.log(users);
         res.status(200).json(users);
     });
 });

@@ -96,8 +96,6 @@ class EnhancedTable extends Component {
                                     return (
                                         <TableRow
                                             hover
-                                            role="checkbox"
-                                            tabIndex={-1}
                                             key={n._id}
                                         >
                                             <TableCell>

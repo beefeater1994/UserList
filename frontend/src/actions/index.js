@@ -29,6 +29,19 @@ export const getData = () => {
       });
   };
 };
+export const createData = (newUser) => {
+    return (dispatch, store) => {
+        dispatch(requestStart());
+        axios
+            .post('/users', newUser)
+            .then(response => {
+                dispatch(requestSuccess(response));
+            })
+            .catch(err => {
+                dispatch(requestFail(err));
+            });
+    };
+};
 
 export const changeSortRule = (order, orderBy) => {
     return {
@@ -51,4 +64,49 @@ export const changeRowsPerPage = (rowsPerPage) => {
         rowsPerPage
     }
 };
+
+export const changeFirstName = (text) => {
+    return {
+        type: "CHANGE_FIRST_NAME",
+        text
+    }
+};
+export const changeLastName = (text) => {
+    return {
+        type: "CHANGE_LAST_NAME",
+        text
+    }
+};
+export const changeSex = (text) => {
+    return {
+        type: "CHANGE_SEX",
+        text
+    }
+};
+export const changeAge = (text) => {
+    return {
+        type: "CHANGE_AGE",
+        text
+    }
+};
+export const changePassword = (text) => {
+    return {
+        type: "CHANGE_PASSWORD",
+        text
+    }
+};
+export const changeRepeatPassword = (text) => {
+    return {
+        type: "CHANGE_REPEAT_PASSWORD",
+        text
+    }
+};
+
+export const clearProfileState = () => {
+    return {
+        type: "CLEAR_PROFILE_STATE"
+    }
+};
+
+
 
