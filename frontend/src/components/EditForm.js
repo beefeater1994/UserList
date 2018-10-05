@@ -64,14 +64,13 @@ const submitHandler = (props) => {
         });
         return false;
     } else {
-        props.createUser(props.profile);
+        props.updateUser(props.profile._id, props.profile);
         props.clearProfileState();
         return true;
     }
 };
 
 const submitButton = props => {
-    console.log(props);
     return (
         <Button variant="outlined" color="primary" onClick={() => {
             const bool = submitHandler(props.appProps);
@@ -83,7 +82,7 @@ const submitButton = props => {
 };
 const WithRouterButton = withRouter(submitButton);
 
-const SimpleList = (props) => {
+const EditForm = (props) => {
     const { classes } = props;
     const changeHandler = (event) => {
         const text = event.target.value;
@@ -109,7 +108,7 @@ const SimpleList = (props) => {
                 <ListItem button>
                     <TextField
                         id="standard-dense"
-                        label="First Name"
+                        value={props.profile.firstName}
                         className={classNames(classes.textField, classes.dense)}
                         margin="dense"
                         name="firstName"
@@ -120,7 +119,7 @@ const SimpleList = (props) => {
                 <ListItem button>
                     <TextField
                         id="standard-dense"
-                        label="Last Name"
+                        value={props.profile.lastName}
                         className={classNames(classes.textField, classes.dense)}
                         margin="dense"
                         name="lastName"
@@ -131,7 +130,7 @@ const SimpleList = (props) => {
                 <ListItem button>
                     <TextField
                         id="standard-dense"
-                        label="Sex"
+                        value={props.profile.sex}
                         className={classNames(classes.textField, classes.dense)}
                         margin="dense"
                         name="sex"
@@ -142,7 +141,7 @@ const SimpleList = (props) => {
                 <ListItem button>
                     <TextField
                         id="standard-dense"
-                        label="Age"
+                        value={props.profile.age}
                         className={classNames(classes.textField, classes.dense)}
                         margin="dense"
                         name="age"
@@ -153,7 +152,7 @@ const SimpleList = (props) => {
                 <ListItem button>
                     <TextField
                         id="standard-dense"
-                        label="Password"
+                        value={props.profile.password}
                         className={classNames(classes.textField, classes.dense)}
                         margin="dense"
                         name="password"
@@ -164,7 +163,7 @@ const SimpleList = (props) => {
                 <ListItem button>
                     <TextField
                         id="standard-dense"
-                        label="Repeat Password"
+                        value={props.profile.repeatPassword}
                         className={classNames(classes.textField, classes.dense)}
                         margin="dense"
                         name="repeatPassword"
@@ -178,10 +177,10 @@ const SimpleList = (props) => {
             </List>
         </div>
     );
-}
+};
 
-SimpleList.propTypes = {
+EditForm.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SimpleList);
+export default withStyles(styles)(EditForm);

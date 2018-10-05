@@ -12,6 +12,7 @@ import EnhancedTableHead from './TableHead';
 import EditIcon from "./UI/EditIcon";
 import Button from "@material-ui/core/Button/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
+import Link from "react-router-dom/es/Link";
 
 function desc(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -73,10 +74,6 @@ class EnhancedTable extends Component {
         this.props.changeRowsPerPage(event.target.value);
     };
 
-    editHandler = (el) => {
-        console.log(el);
-    };
-
     render() {
         const { classes } = this.props;
         const { order, orderBy, rowsPerPage, page } = this.props.page;
@@ -117,15 +114,16 @@ class EnhancedTable extends Component {
                                             key={n._id}
                                         >
                                             <TableCell>
-                                                <Button variant="contained" color="primary" className={classes.button} onClick={() => {
-                                                    console.log(n);
-                                                }}>
+                                                <Button variant="contained" color="primary" className={classes.button} onClick={() => this.props.objectToState(n)}>
                                                     <EditIcon />
-                                                    EDIT
+                                                    <Link to="/editUser">EDIT</Link>
                                                 </Button>
                                             </TableCell>
                                             <TableCell>
-                                                <Button variant="contained" color="primary" className={classes.button}>
+                                                <Button variant="contained" color="primary" className={classes.button} onClick={() => {
+                                                    console.log(n._id);
+                                                    this.props.deleteUser(n._id);
+                                                }}>
                                                     <DeleteIcon className={classes.rightIcon} />
                                                     Delete
                                                 </Button>

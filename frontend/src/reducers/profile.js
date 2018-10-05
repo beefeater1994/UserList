@@ -2,7 +2,7 @@ const initState = {
     firstName: "",
     lastName: "",
     sex: "",
-    age: 20,
+    age: "",
     password: "",
     repeatPassword: ""
 };
@@ -41,6 +41,8 @@ const reducer = (state=initState, action) => {
             };
         case "CLEAR_PROFILE_STATE":
             return initState;
+        case "OBJECT_TO_STATE":
+            return action.preload;
         default:
             return state;
     }

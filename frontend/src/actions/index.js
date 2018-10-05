@@ -44,17 +44,38 @@ export const createData = (newUser) => {
     };
 };
 
+export const updateData = (id, newUser) => {
+    return (dispatch, store) => {
+        dispatch(requestStart());
+        axios
+            .put(`/users/${id}`, newUser)
+            .then(response => {
+                //dispatch(requestSuccess(response));
+            })
+            .catch(err => {
+                dispatch(requestFail(err));
+            });
+    };
+};
+
+export const deleteUser = (id) => {
+    return (dispatch, store) => {
+        axios
+            .delete('/users/'+ id)
+            .then(response => {
+                dispatch(getData());
+            })
+            .catch(err => {
+                dispatch(requestFail(err));
+            });
+    }
+}
+
 export const changeSearchWord = (text) => {
     return {
         type: "CHANGE_SEARCH_WORD",
         text
     }
-};
-
-export const clearSearchWord = () => {
-    return {
-        type: "CLEAR_SEARCH_WORD"
-    };
 };
 
 export const changeSortRule = (order, orderBy) => {
@@ -121,6 +142,13 @@ export const clearProfileState = () => {
         type: "CLEAR_PROFILE_STATE"
     }
 };
+
+export const objectToState = (obj) => {
+    return {
+        type: "OBJECT_TO_STATE",
+        preload: obj
+    }
+}
 
 
 

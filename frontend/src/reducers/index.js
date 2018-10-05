@@ -8,7 +8,7 @@ const reducers = combineReducers({
     users,
     page,
     profile,
-    searchUser
+    searchUser,
 });
 
 export default reducers;

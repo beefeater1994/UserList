@@ -7,6 +7,7 @@ import TableDisplay from "../../components/TableDisplay";
 import Grid from "@material-ui/core/Grid/Grid";
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import SimpleList from "../../components/Form";
+import EditForm from "../../components/EditForm";
 
 class App extends Component {
     render() {
@@ -44,6 +45,23 @@ class App extends Component {
                                     changeSortRule={this.props.changeSortRule}
                                     changePage={this.props.changePage}
                                     changeRowsPerPage={this.props.changeRowsPerPage}
+                                    objectToState={this.props.objectToState}
+                                    deleteUser={this.props.deleteUser}
+                                />
+                            </Grid>
+                        }/>
+                        <Route path='/editUser' render={() =>
+                            <Grid container justify="center" alignItems="center" width='92%'>
+                                <EditForm
+                                    profile={this.props.profile}
+                                    changeFirstName={this.props.changeFirstName}
+                                    changeLastName={this.props.changeLastName}
+                                    changeSex={this.props.changeSex}
+                                    changeAge={this.props.changeAge}
+                                    changePassword={this.props.changePassword}
+                                    changeRepeatPassword={this.props.changeRepeatPassword}
+                                    clearProfileState={this.props.clearProfileState}
+                                    updateUser={this.props.updateUser}
                                 />
                             </Grid>
                         }/>
@@ -59,21 +77,29 @@ const mapStateToProps = state => {
       users: state.users,
       page: state.page,
       profile: state.profile,
-      searchUser: state.searchUser
+      searchUser: state.searchUser,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
+      // Action to get all the users
       getUsers: () => {
           dispatch(actions.getData());
       },
+      // Action to create a user
       createUser: (newUser) => {
           dispatch(actions.createData(newUser));
       },
+      // Action to change the search word
       changeSearchWord: (text) => {
           dispatch(actions.changeSearchWord(text));
       },
+      // Action determine to show all the users or search user
+      changeToShowSearch: () => {
+          dispatch({type: "CHANGE_TO_SHOW_SEARCH"});
+      },
+      // Actions about pagination
       changeSortRule: (order, orderBy) => {
           dispatch(actions.changeSortRule(order, orderBy));
       },
@@ -83,6 +109,7 @@ const mapDispatchToProps = dispatch => {
       changeRowsPerPage: (rowsPerPage) => {
           dispatch(actions.changeRowsPerPage(rowsPerPage));
       },
+      // Actions about create new user
       changeFirstName: (text) => {
           dispatch(actions.changeFirstName(text));
       },
@@ -104,8 +131,16 @@ const mapDispatchToProps = dispatch => {
       clearProfileState: () => {
           dispatch(actions.clearProfileState());
       },
-      changeToShowSearch: () => {
-          dispatch({type: "CHANGE_TO_SHOW_SEARCH"});
+      objectToState: (obj) => {
+          dispatch(actions.objectToState(obj));
+      },
+      // Action to delete user
+      deleteUser: (id) => {
+          dispatch(actions.deleteUser(id));
+      },
+      // Actions to update user
+      updateUser: (id, obj) => {
+          dispatch(actions.updateData(id, obj));
       }
   };
 };
