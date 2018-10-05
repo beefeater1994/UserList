@@ -29,17 +29,31 @@ export const getData = () => {
       });
   };
 };
+
 export const createData = (newUser) => {
     return (dispatch, store) => {
         dispatch(requestStart());
         axios
             .post('/users', newUser)
             .then(response => {
-                dispatch(requestSuccess(response));
+                //dispatch(requestSuccess(response));
             })
             .catch(err => {
                 dispatch(requestFail(err));
             });
+    };
+};
+
+export const changeSearchWord = (text) => {
+    return {
+        type: "CHANGE_SEARCH_WORD",
+        text
+    }
+};
+
+export const clearSearchWord = () => {
+    return {
+        type: "CLEAR_SEARCH_WORD"
     };
 };
 

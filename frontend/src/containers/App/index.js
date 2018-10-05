@@ -5,29 +5,15 @@ import * as actions from '../../actions';
 import SearchBar from "../../components/SeacrhBar";
 import TableDisplay from "../../components/TableDisplay";
 import Grid from "@material-ui/core/Grid/Grid";
-import {BrowserRouter, Route} from 'react-router-dom';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import SimpleList from "../../components/Form";
 
 class App extends Component {
-    componentDidMount() {
-        this.props.getUser();
-    }
     render() {
-        const { isFetching, data, err } = this.props.users;
-        if (isFetching) {
-            return <div>Loading the data....</div>;
-        }
-        if (err) {
-            return <div>This was an error to get the data.</div>;
-        }
-        if (data.length === 0) {
-            return <div>Loading the data....</div>;
-        }
         return (
-            <div>
-                <SearchBar/>
-                <BrowserRouter>
-                    <div>
+            <BrowserRouter>
+                <div>
+                    <Switch>
                         <Route path='/createUser' render={() =>
                             <Grid container justify="center" alignItems="center" width='100%'>
                                 <SimpleList
@@ -45,8 +31,15 @@ class App extends Component {
                         }/>
                         <Route exact={true} path="/" render={()=>
                             <Grid container justify="center" alignItems="center" width='92%'>
+                                <SearchBar
+                                    changeSearchWord={this.props.changeSearchWord}
+                                    searchUser={this.props.searchUser}
+                                    changeToShowSearch={this.props.changeToShowSearch}
+                                />
                                 <TableDisplay
-                                    users={data}
+                                    searchUser={this.props.searchUser}
+                                    users={this.props.users}
+                                    getUsers={this.props.getUsers}
                                     page={this.props.page}
                                     changeSortRule={this.props.changeSortRule}
                                     changePage={this.props.changePage}
@@ -54,9 +47,9 @@ class App extends Component {
                                 />
                             </Grid>
                         }/>
-                    </div>
-                </BrowserRouter>
-            </div>
+                    </Switch>
+                </div>
+            </BrowserRouter>
         );
     }
 }
@@ -65,17 +58,21 @@ const mapStateToProps = state => {
   return {
       users: state.users,
       page: state.page,
-      profile: state.profile
+      profile: state.profile,
+      searchUser: state.searchUser
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-      getUser: () => {
+      getUsers: () => {
           dispatch(actions.getData());
       },
       createUser: (newUser) => {
           dispatch(actions.createData(newUser));
+      },
+      changeSearchWord: (text) => {
+          dispatch(actions.changeSearchWord(text));
       },
       changeSortRule: (order, orderBy) => {
           dispatch(actions.changeSortRule(order, orderBy));
@@ -106,6 +103,9 @@ const mapDispatchToProps = dispatch => {
       },
       clearProfileState: () => {
           dispatch(actions.clearProfileState());
+      },
+      changeToShowSearch: () => {
+          dispatch({type: "CHANGE_TO_SHOW_SEARCH"});
       }
   };
 };

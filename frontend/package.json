@@ -10,6 +10,7 @@
     "classnames": "^2.2.6",
     "enzyme": "^3.4.2",
     "enzyme-adapter-react-16": "^1.2.0",
+    "history": "^4.7.2",
     "material-ui": "^0.20.2",
     "material-ui-flat-pagination": "^3.0.1",
     "prop-types": "^15.6.2",

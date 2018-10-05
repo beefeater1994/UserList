@@ -13,7 +13,6 @@ import EditIcon from "./UI/EditIcon";
 import Button from "@material-ui/core/Button/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-
 function desc(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
         return -1;
@@ -38,7 +37,6 @@ function getSorting(order, orderBy) {
     return order === 'desc' ? (a, b) => desc(a, b, orderBy) : (a, b) => -desc(a, b, orderBy);
 }
 
-
 const styles = theme => ({
     root: {
         width: '90%',
@@ -53,6 +51,9 @@ const styles = theme => ({
 });
 
 class EnhancedTable extends Component {
+    componentDidMount() {
+        this.props.getUsers();
+    }
 
     handleRequestSort = (event, property) => {
         const orderBy = property;
@@ -64,8 +65,6 @@ class EnhancedTable extends Component {
         this.props.changeSortRule(order, orderBy);
     };
 
-
-
     handleChangePage = (event, page) => {
         this.props.changePage(page);
     };
@@ -74,10 +73,29 @@ class EnhancedTable extends Component {
         this.props.changeRowsPerPage(event.target.value);
     };
 
+    editHandler = (el) => {
+        console.log(el);
+    };
+
     render() {
         const { classes } = this.props;
         const { order, orderBy, rowsPerPage, page } = this.props.page;
-        const data = this.props.users;
+        const users = this.props.users;
+        const searchUser = this.props.searchUser;
+        let data = users.data;
+
+        if (users.isFetching) {
+            return <div>Loading the data....</div>;
+        }
+        if (users.err) {
+            return <div>This was an error to get the data.</div>;
+        }
+        if (data.length === 0) {
+            return <div>Loading the data....</div>;
+        }
+        if (searchUser.showSearch) {
+            data = users.data.filter(el => el.firstName === searchUser.searchWord);
+        }
 
         return (
             <Paper className={classes.root}>
@@ -99,7 +117,9 @@ class EnhancedTable extends Component {
                                             key={n._id}
                                         >
                                             <TableCell>
-                                                <Button variant="contained" color="primary" className={classes.button}>
+                                                <Button variant="contained" color="primary" className={classes.button} onClick={() => {
+                                                    console.log(n);
+                                                }}>
                                                     <EditIcon />
                                                     EDIT
                                                 </Button>

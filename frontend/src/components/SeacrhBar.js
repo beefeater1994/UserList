@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -8,6 +8,8 @@ import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import Button from "@material-ui/core/Button/Button";
+import Link from "react-router-dom/es/Link";
+
 
 const styles = theme => ({
     root: {
@@ -80,50 +82,48 @@ const styles = theme => ({
     },
 });
 
-class SearchBar extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            inputValue: ""
-        }
-    }
+class SearchBar extends Component {
     handleChange = (event) => {
-        this.setState({inputValue: event.target.value});
+        this.props.changeSearchWord(event.target.value);
+    };
+    handleSubmit = (event) => {
+        this.props.changeToShowSearch();
+        event.preventDefault();
     };
     render() {
         const { classes } = this.props;
-        return (
-            <div className={classes.root}>
-                <AppBar position="static">
-                    <Toolbar>
-                        <div>
-                            <Typography className={classes.title} variant="title" color="inherit" noWrap>
-                                User List
-                            </Typography>
-                        </div>
-
-                        <div className={classes.search} onSubmit={this.handleSubmit}>
-                            <div className={classes.searchIcon}>
-                                <SearchIcon />
+            return (
+                <div className={classes.root}>
+                    <AppBar position="static">
+                        <Toolbar>
+                            <div>
+                                <Typography className={classes.title} variant="title" color="inherit" noWrap>
+                                    User List
+                                </Typography>
                             </div>
-                            <Input
-                                placeholder="Search…"
-                                disableUnderline
-                                classes={{
-                                    root: classes.inputRoot,
-                                    input: classes.inputInput,
-                                }}
-                                value={this.state.inputValue}
-                                onChange={this.handleChange}
-                            />
-                        </div>
-                        <Button variant="contained" color="primary" className={classes.button}>
-                            CREATE NEW USER
-                        </Button>
-                    </Toolbar>
-                </AppBar>
-            </div>
-        );
+
+                            <form className={classes.search} onSubmit={this.handleSubmit}>
+                                <div className={classes.searchIcon}>
+                                    <SearchIcon />
+                                </div>
+                                <Input
+                                    placeholder="Search…"
+                                    disableUnderline
+                                    classes={{
+                                        root: classes.inputRoot,
+                                        input: classes.inputInput,
+                                    }}
+                                    value={this.props.searchUser.searchWord}
+                                    onChange={this.handleChange}
+                                />
+                            </form>
+                            <Button variant="contained" color="primary" className={classes.button}>
+                                <Link to="/createUser">CREATE NEW USER</Link>
+                            </Button>
+                        </Toolbar>
+                    </AppBar>
+                </div>
+            );
     }
 }
 
